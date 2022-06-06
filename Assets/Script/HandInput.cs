@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HandInput : MonoBehaviour
 {
@@ -28,10 +29,12 @@ public class HandInput : MonoBehaviour
 
     }
 
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        Mouse mouse = Mouse.current; // 鼠标
+        if (mouse.leftButton.wasPressedThisFrame)
         {
             //实例化对象
             clone = (GameObject)Instantiate(target, target.transform.position, Quaternion.identity);
@@ -47,15 +50,16 @@ public class HandInput : MonoBehaviour
             //计数
             i = 0;
         }
-        if (Input.GetMouseButton(0))
+        if (mouse.leftButton.isPressed)
         {
             //每一帧检测，按下鼠标的时间越长，计数越多
             i++;
             //设置顶点数
             line.positionCount++;
+            Vector2 mousePosition = mouse.position.ReadValue();
 
             //设置顶点位置(顶点的索引，将鼠标点击的屏幕坐标转换为世界坐标)
-            line.SetPosition(i - 1,  Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 15)));
+            line.SetPosition(i - 1,  Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 15)));
         }
     }
 
