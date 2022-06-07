@@ -2725,6 +2725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToPlace: {fileID: 16, guid: d8b214887544543f18abb247b5b3c548, type: 3}
+  layers: {fileID: 7698593268010002224, guid: 128a91d5c6fef2f47a1dfd7192c5308f, type: 3}
   placementIndicator: {fileID: 9192277317614505407}
   camera: {fileID: 1117625803}
   raycastManager: {fileID: 40036303}
