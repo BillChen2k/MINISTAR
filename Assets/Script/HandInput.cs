@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.Utilities;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 public class HandInput : MonoBehaviour
 {
@@ -34,7 +37,9 @@ public class HandInput : MonoBehaviour
     void Update()
     {
         Mouse mouse = Mouse.current; // 鼠标
-        if (mouse.leftButton.wasPressedThisFrame)
+        Touchscreen touchScreen = Touchscreen.current;
+        ReadOnlyArray<TouchControl> touches = touchScreen.touches;
+        if (mouse.leftButton.wasPressedThisFrame || touches[0].phase.ReadValue() == TouchPhase.Began)
         {
             //实例化对象
             clone = (GameObject)Instantiate(target, target.transform.position, Quaternion.identity);
@@ -50,14 +55,14 @@ public class HandInput : MonoBehaviour
             //计数
             i = 0;
         }
-        if (mouse.leftButton.isPressed)
+        if (mouse.leftButton.isPressed || touches[0].phase.ReadValue() == TouchPhase.Moved)
         {
             //每一帧检测，按下鼠标的时间越长，计数越多
             i++;
             //设置顶点数
             line.positionCount++;
-            Vector2 mousePosition = mouse.position.ReadValue();
-
+            //Vector2 mousePosition = mouse.position.ReadValue();
+            Vector2 mousePosition = touches[0].position.ReadValue();
             //设置顶点位置(顶点的索引，将鼠标点击的屏幕坐标转换为世界坐标)
             line.SetPosition(i - 1,  Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 15)));
         }
