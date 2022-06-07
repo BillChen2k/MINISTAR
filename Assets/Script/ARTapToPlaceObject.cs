@@ -5,6 +5,10 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.Experimental.XR;
 using System;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
+using UnityEngine.InputSystem.Controls;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 public class ARTapToPlaceObject : MonoBehaviour
 {
@@ -25,7 +29,9 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         UpdatePlacementPose();
         UpdatePlacementIndicator();
-        if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        Touchscreen touchScreen = Touchscreen.current;
+        ReadOnlyArray<TouchControl> touches = touchScreen.touches;
+        if (placementPoseIsValid && touches.Count > 0 && touches[0].phase.ReadValue() == TouchPhase.Began)
         {
             PlaceObject();
         }
