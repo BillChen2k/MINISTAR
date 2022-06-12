@@ -30,23 +30,11 @@ public class ARTapToPlaceObject : MonoBehaviour
         UpdatePlacementPose();
         UpdatePlacementIndicator();
         Touchscreen touchScreen = Touchscreen.current;
-        Mouse mouse = Mouse.current;
-        if (mouse != null)
+        ReadOnlyArray<TouchControl> touches = touchScreen.touches;
+        if (placementPoseIsValid && touches.Count > 0 && touches[0].phase.ReadValue() == TouchPhase.Began)
         {
-            if (placementPoseIsValid && mouse.leftButton.wasPressedThisFrame)
-            {
-                PlaceObject();
-            }
+            PlaceObject();
         }
-        else if (touchScreen != null)
-        {
-            ReadOnlyArray<TouchControl> touches = touchScreen.touches;
-            if (placementPoseIsValid && touches.Count > 0 && touches[0].phase.ReadValue() == TouchPhase.Began)
-            {
-                PlaceObject();
-            }
-        }
-
     }
 
     private void PlaceObject()
