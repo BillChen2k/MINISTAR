@@ -12,7 +12,6 @@ using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 public class ARTapToPlaceObject : MonoBehaviour
 {
-    public GameObject objectToPlace;
     public GameObject layers;
     public GameObject placementIndicator;
     public Camera camera;
@@ -52,7 +51,6 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     private void PlaceObject()
     {
-        Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
         Instantiate(layers, placementPose.position, placementPose.rotation);
     }
 
