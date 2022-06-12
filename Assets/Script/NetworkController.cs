@@ -41,6 +41,7 @@ public class NetworkController : MonoBehaviour
         batchText.text =  "0 / " + maxBtach;
         epochText.text =  "0 / " + maxEpoch;
         accuracyText.text = (0 * 100.0f).ToString("F2") + "%";
+        transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
     }
 
     // Update is called once per frame
