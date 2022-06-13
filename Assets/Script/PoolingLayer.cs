@@ -10,12 +10,6 @@ public class PoolingLayer : MonoBehaviour
     //边长
     public int sideLength = 26;
 
-    //间距
-    public float spacing = 10.0f;
-
-    //正方体模板
-    public GameObject cube;
-
     //产生的正方体
     GameObject[,] cubes;
 
@@ -27,12 +21,6 @@ public class PoolingLayer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
-        //开始点
-        float beginX = (-(spacing / 2.0f) - spacing * (sideLength / 2 - 1));
-        float beginZ = ((spacing / 2.0f) + spacing * (sideLength / 2 - 1));
-        beginLocalPos = new Vector3(beginX, 0, beginZ);
-
         cubes = new GameObject[sideLength, sideLength];
         poolingLayerValue = new double[5, sideLength, sideLength];
 
@@ -41,11 +29,9 @@ public class PoolingLayer : MonoBehaviour
         {
             for (int j = 0; j < sideLength; j++)
             {
-                GameObject newCube = Instantiate(cube);
-                newCube.transform.parent = this.transform;
-                newCube.transform.localPosition = new Vector3(beginLocalPos.x + j * spacing, 0, beginLocalPos.z - i * spacing);
-                newCube.transform.rotation = this.transform.rotation;
-                cubes[i, j] = newCube;
+                //获取物体
+                GameObject obj = this.transform.Find(i + "-" + j).gameObject;
+                cubes[i, j] = obj;
             }
         }
     }

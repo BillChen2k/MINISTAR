@@ -10,17 +10,8 @@ public class ConvolutionLayer : MonoBehaviour
     //边长
     public int sideLength = 24;
 
-    //间距
-    public float spacing = 10.0f;
-
-    //正方体模板
-    public GameObject cube;
-
     //产生的正方体
     GameObject[,] cubes;
-
-    //开始的地点
-    Vector3 beginLocalPos;
 
     public int index = 0;
 
@@ -30,11 +21,6 @@ public class ConvolutionLayer : MonoBehaviour
     {
         Instance = this;
 
-        //开始点
-        float beginX = (-(spacing / 2.0f) - spacing * (sideLength / 2 - 1));
-        float beginZ = ((spacing / 2.0f) + spacing * (sideLength / 2 - 1));
-        beginLocalPos = new Vector3(beginX, 0, beginZ);
-
         cubes = new GameObject[sideLength, sideLength];
         convolutionLayerValue = new double[5, sideLength, sideLength];
 
@@ -42,11 +28,9 @@ public class ConvolutionLayer : MonoBehaviour
         {
             for (int j = 0; j < sideLength; j++)
             {
-                GameObject newCube = Instantiate(cube);
-                newCube.transform.parent = this.transform;
-                newCube.transform.localPosition = new Vector3(beginLocalPos.x + j * spacing, 0, beginLocalPos.z - i * spacing);
-                newCube.transform.rotation = this.transform.rotation;
-                cubes[i, j] = newCube;
+                //获取物体
+                GameObject obj = this.transform.Find(i + "-" + j).gameObject;
+                cubes[i, j] = obj;
             }
         }
     }

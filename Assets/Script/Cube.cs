@@ -6,7 +6,6 @@ public class Cube : MonoBehaviour
 {
 
     Material material;
-
     void Awake()
     {
         material = gameObject.GetComponent<MeshRenderer>().material;

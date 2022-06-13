@@ -8,19 +8,10 @@ public class InputLayer: MonoBehaviour
     public static InputLayer Instance { get; private set; }
 
     //边长
-    public int sideLength = 28;
-
-    //间距
-    public float spacing = 10.0f;
-
-    //正方体模板
-    public GameObject cube;
+    public int cubeCount = 28;
 
     //产生的正方体
     GameObject[,] cubes;
-
-    //开始的地点
-    Vector3 beginLocalPos;
 
     public double[,] intputValue;
 
@@ -28,24 +19,16 @@ public class InputLayer: MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        cubes = new GameObject[cubeCount, cubeCount];
+        intputValue = new double[cubeCount, cubeCount];
 
-        //开始点
-        float beginX = (-(spacing / 2.0f) - spacing * (sideLength / 2 - 1));
-        float beginZ = ((spacing / 2.0f) + spacing * (sideLength / 2 - 1));
-        beginLocalPos = new Vector3(beginX, 0, beginZ);
-
-        cubes = new GameObject[sideLength, sideLength];
-        intputValue = new double[sideLength, sideLength];
-
-        for (int i = 0; i < sideLength; i++)
+        for (int i = 0; i < cubeCount; i++)
         {
-            for (int j = 0; j < sideLength; j++)
+            for (int j = 0; j < cubeCount; j++)
             {
-                GameObject newCube = Instantiate(cube);
-                newCube.transform.parent = this.transform;
-                newCube.transform.localPosition = new Vector3(beginLocalPos.x + j * spacing, 0, beginLocalPos.z - i * spacing);
-                newCube.transform.rotation = this.transform.rotation;
-                cubes[i, j] = newCube;
+                //获取物体
+                GameObject obj = this.transform.Find(i + "-" + j).gameObject;
+                cubes[i, j] = obj;
             }
         }
     }
@@ -60,21 +43,6 @@ public class InputLayer: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //调整间距代码
-        //float beginX = (-(spacing / 2.0f) - spacing * (sideLength / 2 - 1));
-        //float beginZ = ((spacing / 2.0f) + spacing * (sideLength / 2 - 1));
-        //beginLocalPos = new Vector3(beginX, 0, beginZ);
-
-        //int count = 0;
-
-        //for (int i = 0; i < sideLength; i++)
-        //{
-        //    for (int j = 0; j < sideLength; j++)
-        //    {
-        //        cubes[count++].transform.localPosition = new Vector3(beginLocalPos.x + j * spacing, 0, beginLocalPos.z - i * spacing);
-        //    }
-        //} 
     }
 
 
@@ -85,16 +53,16 @@ public class InputLayer: MonoBehaviour
     ////读取
     //void readTestImages()
     //{
-    //    testColors = new float[10, sideLength, sideLength];
+    //    testColors = new float[10, cubeCount, cubeCount];
 
     //    for(int k=0;k<10;k++)
     //    {
     //        Texture2D image = (Texture2D)Resources.Load(k.ToString()) as Texture2D;
-    //        for (int i = 0; i < sideLength; i++)
+    //        for (int i = 0; i < cubeCount; i++)
     //        {
-    //            for (int j = 0; j < sideLength; j++)
+    //            for (int j = 0; j < cubeCount; j++)
     //            {
-    //                Color tempColor = image.GetPixel(j, sideLength - i);
+    //                Color tempColor = image.GetPixel(j, cubeCount - i);
     //                testColors[k, i, j] = tempColor.r * 0.299f + tempColor.g * 0.587f + tempColor.b * 0.114f;
     //            }
     //        }
@@ -103,9 +71,9 @@ public class InputLayer: MonoBehaviour
 
     public void inputImage(DataParams dataParams)
     {
-        for (int i = 0; i < sideLength; i++)
+        for (int i = 0; i < cubeCount; i++)
         {
-            for (int j = 0; j < sideLength; j++)
+            for (int j = 0; j < cubeCount; j++)
             {
                 float temp = (float)(1 - dataParams.input[i, j]);
                 intputValue[i, j] = dataParams.input[i, j];
@@ -117,9 +85,9 @@ public class InputLayer: MonoBehaviour
 
     public void handInput(double[,] inputData)
     {
-        for (int i = 0; i < sideLength; i++)
+        for (int i = 0; i < cubeCount; i++)
         {
-            for (int j = 0; j < sideLength; j++)
+            for (int j = 0; j < cubeCount; j++)
             {
                 float temp = (float)(1 - inputData[i,j]);
                 intputValue[i, j] = inputData[i,j];
