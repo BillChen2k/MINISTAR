@@ -4927,7 +4927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePosition: {fileID: 966468405}
-  mainCamera: {fileID: 963194227}
+  mainCamera: {fileID: 1117625803}
   canvas: {fileID: 815495907}
 --- !u!1 &75288233
 GameObject:
@@ -101991,7 +101991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePosition: {fileID: 708586030}
-  mainCamera: {fileID: 963194227}
+  mainCamera: {fileID: 1117625803}
   canvas: {fileID: 815495907}
 --- !u!1 &1442998234
 GameObject:
@@ -105502,7 +105502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePosition: {fileID: 1935839402}
-  mainCamera: {fileID: 963194227}
+  mainCamera: {fileID: 1117625803}
   canvas: {fileID: 815495907}
 --- !u!1 &1496426662
 GameObject:
@@ -124739,7 +124739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePosition: {fileID: 486229958}
-  mainCamera: {fileID: 963194227}
+  mainCamera: {fileID: 1117625803}
   canvas: {fileID: 815495907}
 --- !u!1 &1799202687
 GameObject:
