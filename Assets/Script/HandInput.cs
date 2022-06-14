@@ -59,7 +59,13 @@ public class HandInput : MonoBehaviour
         //Vector2 mousePosition = pointer.position.ReadValue();
         //Debug.LogError(mousePosition);
         //设置顶点位置(顶点的索引，将鼠标点击的屏幕坐标转换为世界坐标)
-        line.SetPosition(i - 1, Camera.main.ScreenToWorldPoint(new Vector3(point.x, point.y, 15)));
+        Vector2 localPosition = new Vector2();
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(contextRect, point, null, out localPosition);
+        if (contextRect.rect.Contains(localPosition))
+        {
+            line.SetPosition(i - 1, Camera.main.ScreenToWorldPoint(new Vector3(point.x, point.y, 15)));
+        }
+        
     }
 
 
