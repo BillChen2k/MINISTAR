@@ -20,7 +20,6 @@ public class HandInput : MonoBehaviour
 
     //捕捉方形
     public RectTransform contextRect;
-    public Camera mainCamera;
     public RawImage handwriting;
 
     private void Awake()
@@ -113,45 +112,40 @@ public class HandInput : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 运行模式下Texture转换成Texture2D
+    /// </summary>
+    /// <param name="texture"></param>
+    /// <returns></returns>
+    private Texture2D TextureToTexture2D(Texture texture)
+    {
+        Texture2D texture2D = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, false);
+        RenderTexture currentRT = RenderTexture.active;
+        RenderTexture renderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 32);
+        Graphics.Blit(texture, renderTexture);
+
+        RenderTexture.active = renderTexture;
+        texture2D.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        texture2D.Apply();
+
+        RenderTexture.active = currentRT;
+        RenderTexture.ReleaseTemporary(renderTexture);
+
+        return texture2D;
+    }
+
 
     Texture2D CaptureCamera()
     {
-        Rect rect = contextRect.rect;
-        Debug.Log(rect);
-        // 创建一个RenderTexture对象
-        RenderTexture rt = new RenderTexture((int)Screen.width, (int)Screen.height, 0);
-        // 临时设置相关相机的targetTexture为rt, 并手动渲染相关相机
-        mainCamera.targetTexture = rt;
-        mainCamera.Render();
+        Texture2D handImage = TextureToTexture2D(handwriting.texture);
+        processTexture2D(handImage);
 
-        //ps: --- 如果这样加上第二个相机，可以实现只截图某几个指定的相机一起看到的图像。
-        //camera2.targetTexture = rt;
-        // camera2.Render();
-        //ps: -------------------------------------------------------------------
-
-        // 激活这个rt, 并从中中读取像素。
-        RenderTexture.active = rt;
-        Texture2D screenShot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24, false);
-        screenShot.ReadPixels(new Rect(Screen.width*0.5f - rect.width*0.5f,
-                                        Screen.height * 0.5f - rect.height * 0.5f,
-                                        rect.width ,
-                                        rect.width), 0, 0);// 注：这个时候，它是从RenderTexture.active中读取像素
-        screenShot.Apply();
-
-        processTexture2D(screenShot);
-
-        // 重置相关参数，以使用camera继续在屏幕上显示
-        mainCamera.targetTexture = null;
-        // camera2.targetTexture = null;
-        //ps: camera2.targetTexture = null;
-        RenderTexture.active = null; // JC: added to avoid errors
-        GameObject.Destroy(rt);
         // 最后将这些纹理数据，成一个png图片文件
-        byte[] bytes = screenShot.EncodeToPNG();
+        byte[] bytes = handImage.EncodeToPNG();
         string filename = Application.dataPath + string.Format("/Screenshot/Screenshot_.png");
         System.IO.File.WriteAllBytes(filename, bytes);
         Debug.Log(string.Format("截屏了一张照片: {0}", filename));
-        return screenShot;
+        return handImage;
     }
 
 

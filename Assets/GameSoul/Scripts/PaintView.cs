@@ -72,6 +72,12 @@ public class PaintView : MonoBehaviour
 
 	#region 外部接口
 
+    public void clear()
+    {
+        Color clearColor = new Color(0, 0, 0, 0);
+        _paintBrushMat.SetColor("_Color", clearColor);
+    }
+
 	public void SetBrushSize(float size)
     {
        _brushSize = size;
