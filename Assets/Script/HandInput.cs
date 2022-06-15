@@ -80,22 +80,22 @@ public class HandInput : MonoBehaviour
             ReadOnlyArray<TouchControl> touches = touchScreen.touches;
             if (touches[0].phase.ReadValue() == TouchPhase.Began)
             {
-                initLine();
+                //initLine();
             }
             if (touches[0].phase.ReadValue() == TouchPhase.Moved)
             {
-                addLineVertex(pointer.position.ReadValue());
+                //addLineVertex(pointer.position.ReadValue());
             }
         }
         else if (mouse != null)
         {
             if (mouse.leftButton.wasPressedThisFrame)
             {
-                initLine();
+                //initLine();
             }
             if (mouse.leftButton.isPressed)
             {
-                addLineVertex(pointer.position.ReadValue());
+                //addLineVertex(pointer.position.ReadValue());
             }
         }
 
