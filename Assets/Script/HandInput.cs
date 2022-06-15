@@ -141,10 +141,10 @@ public class HandInput : MonoBehaviour
         processTexture2D(handImage);
 
         // 最后将这些纹理数据，成一个png图片文件
-        byte[] bytes = handImage.EncodeToPNG();
-        string filename = Application.dataPath + string.Format("/Screenshot/Screenshot_.png");
-        System.IO.File.WriteAllBytes(filename, bytes);
-        Debug.Log(string.Format("截屏了一张照片: {0}", filename));
+        //byte[] bytes = handImage.EncodeToPNG();
+        //string filename = Application.dataPath + string.Format("/Screenshot/Screenshot_.png");
+        //System.IO.File.WriteAllBytes(filename, bytes);
+        //Debug.Log(string.Format("截屏了一张照片: {0}", filename));
         return handImage;
     }
 
@@ -294,9 +294,9 @@ public class HandInput : MonoBehaviour
         NetworkController.Instance.handInputHandler(inputImage);
         //processedTexture.Resize(28,28);
         // 最后将这些纹理数据，成一个png图片文件
-        byte[] bytes = processedTexture.EncodeToPNG();
-        string filename = Application.dataPath + string.Format("/Screenshot/procfeScreenshot_.png");
-        System.IO.File.WriteAllBytes(filename, bytes);
-        Debug.Log(string.Format("截屏了一张照片: {0}", filename));
+        //byte[] bytes = processedTexture.EncodeToPNG();
+        //string filename = Application.dataPath + string.Format("/Screenshot/procfeScreenshot_.png");
+        //System.IO.File.WriteAllBytes(filename, bytes);
+        //Debug.Log(string.Format("截屏了一张照片: {0}", filename));
     }
 }
