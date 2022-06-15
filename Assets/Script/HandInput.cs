@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Utilities;
@@ -20,6 +21,7 @@ public class HandInput : MonoBehaviour
     //捕捉方形
     public RectTransform contextRect;
     public Camera mainCamera;
+    public RawImage handwriting;
 
     private void Awake()
     {
@@ -110,8 +112,6 @@ public class HandInput : MonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
     }
-
-
 
 
     Texture2D CaptureCamera()

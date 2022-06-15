@@ -12,13 +12,18 @@ using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 public class ARPoseUpdate : MonoBehaviour
 {
-    public GameObject objectToPlace;
     public GameObject placementIndicator;
     public Camera camera;
 
     public ARRaycastManager raycastManager;
     private Pose placementPose;
     private bool placementPoseIsValid = false;
+    private bool isHandWriting = false;
+
+    public void SetIsHandWriting(bool value)
+    {
+        isHandWriting = value;
+    }
 
     void Start()
     {
@@ -29,42 +34,27 @@ public class ARPoseUpdate : MonoBehaviour
     {
         UpdatePlacementPose();
         UpdatePlacementIndicator();
-        Touchscreen touchScreen = Touchscreen.current;
-        Mouse mouse = Mouse.current;
-        if (mouse != null)
-        {
-            if (placementPoseIsValid && mouse.leftButton.wasPressedThisFrame)
-            {
-                PlaceObject();
-            }
-        }
-        else if (touchScreen != null)
-        {
-            ReadOnlyArray<TouchControl> touches = touchScreen.touches;
-            if (placementPoseIsValid && touches.Count > 0 && touches[0].phase.ReadValue() == TouchPhase.Began)
-            {
-                PlaceObject();
-            }
-        }
-
-    }
-
-    private void PlaceObject()
-    {
-        Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
     }
 
     private void UpdatePlacementIndicator()
     {
-        if (placementPoseIsValid)
-        {
-            placementIndicator.SetActive(true);
-            placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
-        }
-        else
+        if (isHandWriting)
         {
             placementIndicator.SetActive(false);
         }
+        else
+        {
+            if (placementPoseIsValid)
+            {
+                placementIndicator.SetActive(true);
+                placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
+            }
+            else
+            {
+                placementIndicator.SetActive(false);
+            }
+        }
+
     }
 
     private void UpdatePlacementPose()
